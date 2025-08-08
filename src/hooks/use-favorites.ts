@@ -1,17 +1,17 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { type Recipe } from '@/ai/schemas';
 
 const FAVORITES_KEY = 'fgfridge-feast-favorites';
 
 export function useFavorites() {
-  const [favorites, setFavorites] = useState<string[]>([]);
+  const [favorites, setFavorites] = useState<Recipe[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     try {
       const item = window.localStorage.getItem(FAVORITES_KEY);
-      // For now, we assume favorites are recipe titles (strings)
       setFavorites(item ? JSON.parse(item) : []);
     } catch (error) {
       console.error('Error reading favorites from localStorage', error);
@@ -31,18 +31,19 @@ export function useFavorites() {
     }
   }, [favorites, isLoaded]);
 
-  const toggleFavorite = useCallback((recipeTitle: string) => {
+  const toggleFavorite = useCallback((recipe: Recipe) => {
     setFavorites((prev) => {
-      if (prev.includes(recipeTitle)) {
-        return prev.filter((fav) => fav !== recipeTitle);
+      const isFavorited = prev.some((fav) => fav.title === recipe.title);
+      if (isFavorited) {
+        return prev.filter((fav) => fav.title !== recipe.title);
       } else {
-        return [...prev, recipeTitle];
+        return [...prev, recipe];
       }
     });
   }, []);
   
   const isFavorite = useCallback((recipeTitle: string) => {
-    return favorites.includes(recipeTitle);
+    return favorites.some((fav) => fav.title === recipeTitle);
   }, [favorites]);
 
   return { favorites, toggleFavorite, isFavorite, isLoaded };

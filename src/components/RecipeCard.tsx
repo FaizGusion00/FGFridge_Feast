@@ -18,7 +18,7 @@ export function RecipeCard({ recipe, onSelect }: RecipeCardProps) {
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    toggleFavorite(recipe.title);
+    toggleFavorite(recipe);
   };
 
   const favorite = isFavorite(recipe.title);

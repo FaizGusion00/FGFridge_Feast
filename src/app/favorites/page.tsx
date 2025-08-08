@@ -1,14 +1,27 @@
 'use client';
 
+import { useState } from 'react';
 import { useFavorites } from '@/hooks/use-favorites';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { UtensilsCrossed } from 'lucide-react';
-import { Card, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
+import { RecipeCard } from '@/components/RecipeCard';
+import { RecipeModal } from '@/components/RecipeModal';
+import { type Recipe } from '@/ai/schemas';
 
 export default function FavoritesPage() {
   const { favorites, isLoaded } = useFavorites();
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+
+  const handleRecipeSelect = (recipe: Recipe) => {
+    setSelectedRecipe(recipe);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedRecipe(null);
+  };
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
@@ -17,9 +30,10 @@ export default function FavoritesPage() {
       {!isLoaded && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {Array.from({ length: 3 }).map((_, i) => (
-             <Card key={i} className="p-6 space-y-4">
+             <Card key={i} className="p-4 space-y-4">
               <Skeleton className="h-6 w-3/4" />
               <Skeleton className="h-4 w-full" />
+               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-5/6" />
             </Card>
           ))}
@@ -41,14 +55,18 @@ export default function FavoritesPage() {
 
       {isLoaded && favorites.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {favorites.map((recipeTitle, index) => (
-            <Card key={index} className="bg-card border-border rounded-xl shadow-md p-6">
-                <CardHeader>
-                    <CardTitle className="font-headline text-xl text-primary">{recipeTitle}</CardTitle>
-                </CardHeader>
-            </Card>
+          {favorites.map((recipe, index) => (
+            <RecipeCard key={index} recipe={recipe} onSelect={() => handleRecipeSelect(recipe)} />
           ))}
         </div>
+      )}
+
+      {selectedRecipe && (
+        <RecipeModal 
+          recipe={selectedRecipe} 
+          isOpen={!!selectedRecipe} 
+          onClose={handleCloseModal} 
+        />
       )}
     </div>
   );
