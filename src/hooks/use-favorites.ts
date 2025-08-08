@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 
-const FAVORITES_KEY = 'fridge-feast-favorites';
+const FAVORITES_KEY = 'fgfridge-feast-favorites';
 
 export function useFavorites() {
   const [favorites, setFavorites] = useState<string[]>([]);

@@ -8,7 +8,7 @@ export default function Header() {
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-3 text-2xl font-bold font-headline transition-opacity hover:opacity-80">
           <ChefHat className="h-8 w-8 text-primary" />
-          <span>Fridge Feast</span>
+          <span>FGFridge Feast</span>
         </Link>
         <nav>
           <Button asChild variant="ghost" className="text-base">

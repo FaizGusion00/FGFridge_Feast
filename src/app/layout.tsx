@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { Inter, Raleway } from 'next/font/google';
 
 export const metadata: Metadata = {
-  title: 'Fridge Feast',
+  title: 'FGFridge Feast',
   description: 'Generate recipes from ingredients you have.',
 };
 
