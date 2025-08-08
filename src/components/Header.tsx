@@ -14,7 +14,7 @@ export default function Header() {
           <Button asChild variant="ghost" className="text-base">
             <Link href="/favorites">
               <Heart className="mr-2 h-5 w-5" />
-              Favorites
+              Favorites / Kegemaran
             </Link>
           </Button>
         </nav>

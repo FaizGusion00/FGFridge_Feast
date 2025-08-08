@@ -27,12 +27,12 @@ function SubmitButton() {
       {pending ? (
         <>
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Generating...
+          Generating / Sedang menjana...
         </>
       ) : (
         <>
           <WandSparkles className="mr-2 h-4 w-4" />
-          Generate Recipes
+          Generate Recipes / Jana Resepi
         </>
       )}
     </Button>
@@ -45,7 +45,7 @@ function Results({ recipes, onRecipeSelect }: { recipes: Recipe[] | undefined, o
   if (pending) {
     return (
       <section className="mt-12">
-        <h2 className="text-3xl font-bold font-headline mb-8 text-center">Crafting your recipes...</h2>
+        <h2 className="text-3xl font-bold font-headline mb-8 text-center">Crafting your recipes... / Mencipta resepi anda...</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {Array.from({ length: 3 }).map((_, i) => (
             <Card key={i} className="p-4 space-y-4">
@@ -63,7 +63,7 @@ function Results({ recipes, onRecipeSelect }: { recipes: Recipe[] | undefined, o
   if (recipes && recipes.length > 0) {
     return (
       <section className="mt-12">
-        <h2 className="text-3xl font-bold font-headline mb-8 text-center">Here are your feast ideas!</h2>
+        <h2 className="text-3xl font-bold font-headline mb-8 text-center">Here are your feast ideas! / Ini idea masakan anda!</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-in fade-in-50 duration-500">
         {recipes.map((recipe, index) => (
             <RecipeCard key={index} recipe={recipe} onSelect={() => onRecipeSelect(recipe)} />
@@ -109,23 +109,23 @@ export default function Home() {
     <div className="container mx-auto px-4 py-8 md:py-12">
        <section className="text-center mb-12 bg-card border border-border rounded-xl p-8 shadow-lg">
         <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4 text-primary">
-          What's in your fridge?
+          What's in your fridge? / Apa ada dalam peti sejuk?
         </h1>
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-          Enter the ingredients you have on hand, and let our AI chef whip up some delicious recipe ideas for you.
+          Enter the ingredients you have on hand, and let our AI chef whip up some delicious recipe ideas for you. / Masukkan bahan-bahan yang anda ada, dan biarkan chef AI kami menyediakan beberapa idea resipi yang lazat untuk anda.
         </p>
       </section>
 
       <form ref={formRef} action={formAction} className="max-w-2xl mx-auto space-y-6">
         <div>
-          <Label htmlFor="ingredients" className="text-lg font-medium">Ingredients</Label>
+          <Label htmlFor="ingredients" className="text-lg font-medium">Ingredients / Bahan-bahan</Label>
           <p className="text-sm text-muted-foreground mb-2">
-            List your ingredients, separated by commas (e.g., chicken breast, tomatoes, basil).
+            List your ingredients, separated by commas (e.g., chicken breast, tomatoes, basil). / Senaraikan bahan-bahan anda, dipisahkan dengan koma (cth., dada ayam, tomato, selasih).
           </p>
           <Textarea
             id="ingredients"
             name="ingredients"
-            placeholder="e.g. eggs, cheese, bread, butter"
+            placeholder="e.g. eggs, cheese, bread, butter / cth. telur, keju, roti, mentega"
             rows={4}
             required
             className="text-base bg-secondary border-border focus:ring-primary"
