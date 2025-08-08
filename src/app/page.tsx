@@ -12,6 +12,7 @@ import { WandSparkles, Loader2 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card } from '@/components/ui/card';
 import type { Recipe } from '@/ai/schemas';
+import { RecipeModal } from '@/components/RecipeModal';
 
 const initialState: ActionState = {
   recipes: undefined,
@@ -38,7 +39,7 @@ function SubmitButton() {
   );
 }
 
-function Results({ recipes }: { recipes: Recipe[] | undefined }) {
+function Results({ recipes, onRecipeSelect }: { recipes: Recipe[] | undefined, onRecipeSelect: (recipe: Recipe) => void }) {
   const { pending } = useFormStatus();
 
   if (pending) {
@@ -65,7 +66,7 @@ function Results({ recipes }: { recipes: Recipe[] | undefined }) {
         <h2 className="text-3xl font-bold font-headline mb-8 text-center">Here are your feast ideas!</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-in fade-in-50 duration-500">
         {recipes.map((recipe, index) => (
-            <RecipeCard key={index} recipe={recipe} />
+            <RecipeCard key={index} recipe={recipe} onSelect={() => onRecipeSelect(recipe)} />
         ))}
         </div>
       </section>
@@ -80,6 +81,7 @@ export default function Home() {
   const { toast } = useToast();
   const resultsRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
 
   useEffect(() => {
     if (state.error && !state.fieldErrors) {
@@ -93,6 +95,15 @@ export default function Home() {
         resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, [state, toast]);
+
+  const handleRecipeSelect = (recipe: Recipe) => {
+    setSelectedRecipe(recipe);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedRecipe(null);
+  };
+
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
@@ -130,10 +141,17 @@ export default function Home() {
           <SubmitButton />
         </div>
         <div ref={resultsRef}>
-          <Results recipes={state.recipes} />
+          <Results recipes={state.recipes} onRecipeSelect={handleRecipeSelect} />
         </div>
       </form>
 
+      {selectedRecipe && (
+        <RecipeModal 
+          recipe={selectedRecipe} 
+          isOpen={!!selectedRecipe} 
+          onClose={handleCloseModal} 
+        />
+      )}
     </div>
   );
 }
