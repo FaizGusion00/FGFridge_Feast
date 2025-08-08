@@ -12,6 +12,7 @@ import { type Recipe } from "@/ai/schemas";
 import { Clock, ChefHat, Soup } from "lucide-react";
 import { useLanguage } from "@/hooks/use-language";
 import { ScrollArea } from "./ui/scroll-area";
+import { cn } from "@/lib/utils";
 
 interface RecipeModalProps {
   recipe: Recipe;
@@ -26,11 +27,11 @@ export function RecipeModal({ recipe, isOpen, onClose }: RecipeModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-4xl max-h-[90dvh] flex flex-col p-0">
-        <DialogHeader className="p-6 pb-4">
+        <DialogHeader className="p-4 sm:p-6 pb-4 border-b">
           <Badge variant="secondary" className="w-fit text-sm mb-2">{recipe.servings}</Badge>
-          <DialogTitle className="font-headline text-3xl md:text-5xl text-primary">{recipe.title}</DialogTitle>
-          <DialogDescription className="text-lg text-muted-foreground mt-2">{recipe.description}</DialogDescription>
-          <div className="flex flex-wrap gap-x-6 gap-y-2 text-muted-foreground mt-4">
+          <DialogTitle className="font-headline text-2xl sm:text-3xl md:text-4xl text-primary">{recipe.title}</DialogTitle>
+          <DialogDescription className="text-base sm:text-lg text-muted-foreground mt-2">{recipe.description}</DialogDescription>
+          <div className="flex flex-wrap gap-x-4 sm:gap-x-6 gap-y-2 text-muted-foreground mt-4 text-sm sm:text-base">
             <div className="flex items-center gap-2">
               <Clock className="h-5 w-5" />
               <span>Prep: {recipe.prepTime}</span>
@@ -42,10 +43,10 @@ export function RecipeModal({ recipe, isOpen, onClose }: RecipeModalProps) {
           </div>
         </DialogHeader>
 
-        <ScrollArea className="flex-1">
-          <div className="p-6 pt-0 grid md:grid-cols-3 gap-8">
+        <ScrollArea className="flex-1 overflow-y-auto">
+           <div className="p-4 sm:p-6 grid md:grid-cols-3 gap-6 sm:gap-8">
             <div className="md:col-span-1">
-              <h2 className="text-2xl font-headline font-bold flex items-center gap-3 mb-4 sticky top-0 bg-background py-2">
+              <h2 className="text-xl sm:text-2xl font-headline font-bold flex items-center gap-3 mb-4 sticky top-0 bg-background py-2">
                 <Soup className="h-6 w-6 text-primary" />
                 {text.ingredients[language]}
               </h2>
@@ -57,11 +58,11 @@ export function RecipeModal({ recipe, isOpen, onClose }: RecipeModalProps) {
             </div>
             
             <div className="md:col-span-2">
-              <h2 className="text-2xl font-headline font-bold flex items-center gap-3 mb-4 sticky top-0 bg-background py-2">
+              <h2 className="text-xl sm:text-2xl font-headline font-bold flex items-center gap-3 mb-4 sticky top-0 bg-background py-2">
                   <ChefHat className="h-6 w-6 text-primary" />
                   {text.instructions[language]}
               </h2>
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {recipe.instructions?.map((instruction, index) => (
                   <div key={index} className="flex gap-4 items-start">
                     <div className="flex-shrink-0 h-8 w-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-lg mt-1">
