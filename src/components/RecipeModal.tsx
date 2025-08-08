@@ -46,7 +46,7 @@ export function RecipeModal({ recipe, isOpen, onClose }: RecipeModalProps) {
               Ingredients
             </h2>
             <ul className="space-y-2 list-disc list-inside text-foreground/90">
-              {recipe.ingredients.map((ingredient, index) => (
+              {recipe.ingredients?.map((ingredient, index) => (
                 <li key={index}>{ingredient}</li>
               ))}
             </ul>
@@ -58,7 +58,7 @@ export function RecipeModal({ recipe, isOpen, onClose }: RecipeModalProps) {
                 Instructions
             </h2>
             <div className="space-y-6">
-              {recipe.instructions.map((instruction, index) => (
+              {recipe.instructions?.map((instruction, index) => (
                 <div key={index} className="flex gap-4 items-start">
                   <div className="flex-shrink-0 h-8 w-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-lg mt-1">
                     {index + 1}
