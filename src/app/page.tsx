@@ -1,11 +1,11 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState, useEffect, useRef } from 'react';
+import { useFormStatus } from 'react-dom';
 import { getRecipeIdeasAction, type ActionState } from '@/app/actions';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { RecipeCard } from '@/components/RecipeCard';
-import { useEffect, useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Label } from '@/components/ui/label';
 import { WandSparkles, Loader2 } from 'lucide-react';
@@ -76,7 +76,7 @@ function Results({ recipes }: { recipes: Recipe[] | undefined }) {
 }
 
 export default function Home() {
-  const [state, formAction] = useFormState(getRecipeIdeasAction, initialState);
+  const [state, formAction] = useActionState(getRecipeIdeasAction, initialState);
   const { toast } = useToast();
   const resultsRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
