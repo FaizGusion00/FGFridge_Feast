@@ -26,11 +26,13 @@ const prompt = ai.definePrompt({
   name: 'generateRecipeIdeasPrompt',
   input: {schema: GenerateRecipeIdeasInputSchema},
   output: {schema: GenerateRecipeIdeasOutputSchema},
-  prompt: `You are a recipe assistant. Given the following ingredients, suggest some recipe ideas.
+  prompt: `You are a world-class chef. Given a list of ingredients, your task is to create three diverse and delicious recipe ideas.
 
-Ingredients: {{{ingredients}}}
+For each recipe, provide a complete, well-structured set of details.
 
-Return a list of recipe ideas that can be made with the given ingredients.`,
+Ingredients provided: {{{ingredients}}}
+
+Return a list of detailed recipes.`,
 });
 
 const generateRecipeIdeasFlow = ai.defineFlow(

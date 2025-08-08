@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { WandSparkles, Loader2 } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card } from '@/components/ui/card';
+import type { Recipe } from '@/ai/schemas';
 
 const initialState: ActionState = {
   recipes: undefined,
@@ -37,15 +38,15 @@ function SubmitButton() {
   );
 }
 
-function Results({ recipes }: { recipes: string[] | undefined }) {
+function Results({ recipes }: { recipes: Recipe[] | undefined }) {
   const { pending } = useFormStatus();
 
   if (pending) {
     return (
       <section className="mt-12">
         <h2 className="text-3xl font-bold font-headline mb-8 text-center">Crafting your recipes...</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Array.from({ length: 6 }).map((_, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {Array.from({ length: 3 }).map((_, i) => (
             <Card key={i} className="p-4 space-y-4">
               <Skeleton className="h-6 w-3/4" />
               <Skeleton className="h-4 w-full" />
@@ -62,9 +63,9 @@ function Results({ recipes }: { recipes: string[] | undefined }) {
     return (
       <section className="mt-12">
         <h2 className="text-3xl font-bold font-headline mb-8 text-center">Here are your feast ideas!</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in-50 duration-500">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-in fade-in-50 duration-500">
           {recipes.map((recipe, index) => (
-            <RecipeCard key={index} recipe={recipe} />
+            <RecipeCard key={index} recipe={recipe} index={index} />
           ))}
         </div>
       </section>
@@ -95,8 +96,8 @@ export default function Home() {
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
-      <section className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4">
+       <section className="text-center mb-12 bg-card border border-border rounded-xl p-8 shadow-lg">
+        <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4 text-primary">
           What's in your fridge?
         </h1>
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -116,7 +117,7 @@ export default function Home() {
             placeholder="e.g. eggs, cheese, bread, butter"
             rows={4}
             required
-            className="text-base"
+            className="text-base bg-secondary border-border focus:ring-primary"
             aria-describedby="ingredients-error"
           />
           {state.fieldErrors?.ingredients && (

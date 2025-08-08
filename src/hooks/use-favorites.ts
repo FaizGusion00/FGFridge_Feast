@@ -11,6 +11,7 @@ export function useFavorites() {
   useEffect(() => {
     try {
       const item = window.localStorage.getItem(FAVORITES_KEY);
+      // For now, we assume favorites are recipe titles (strings)
       setFavorites(item ? JSON.parse(item) : []);
     } catch (error) {
       console.error('Error reading favorites from localStorage', error);
@@ -30,18 +31,18 @@ export function useFavorites() {
     }
   }, [favorites, isLoaded]);
 
-  const toggleFavorite = useCallback((recipe: string) => {
+  const toggleFavorite = useCallback((recipeTitle: string) => {
     setFavorites((prev) => {
-      if (prev.includes(recipe)) {
-        return prev.filter((fav) => fav !== recipe);
+      if (prev.includes(recipeTitle)) {
+        return prev.filter((fav) => fav !== recipeTitle);
       } else {
-        return [...prev, recipe];
+        return [...prev, recipeTitle];
       }
     });
   }, []);
   
-  const isFavorite = useCallback((recipe: string) => {
-    return favorites.includes(recipe);
+  const isFavorite = useCallback((recipeTitle: string) => {
+    return favorites.includes(recipeTitle);
   }, [favorites]);
 
   return { favorites, toggleFavorite, isFavorite, isLoaded };

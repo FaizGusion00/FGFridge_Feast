@@ -3,11 +3,23 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/Header";
 import { cn } from '@/lib/utils';
+import { Inter, Raleway } from 'next/font/google';
 
 export const metadata: Metadata = {
   title: 'Fridge Feast',
   description: 'Generate recipes from ingredients you have.',
 };
+
+const fontBody = Inter({
+  subsets: ['latin'],
+  variable: '--font-body',
+});
+
+const fontHeadline = Raleway({
+  subsets: ['latin'],
+  variable: '--font-headline',
+  weight: ['400', '700'],
+});
 
 export default function RootLayout({
   children,
@@ -16,17 +28,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
-      </head>
       <body
         className={cn(
-          'min-h-screen font-body antialiased'
+          'min-h-screen font-body antialiased',
+          fontBody.variable,
+          fontHeadline.variable
         )}
       >
-        <div className="relative flex min-h-dvh flex-col">
+        <div className="relative flex min-h-dvh flex-col bg-background">
           <Header />
           <main className="flex-1">{children}</main>
         </div>
