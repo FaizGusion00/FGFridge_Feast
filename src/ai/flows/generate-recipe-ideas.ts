@@ -26,9 +26,11 @@ const prompt = ai.definePrompt({
   name: 'generateRecipeIdeasPrompt',
   input: {schema: GenerateRecipeIdeasInputSchema},
   output: {schema: GenerateRecipeIdeasOutputSchema},
-  prompt: `You are a world-class chef who is an expert in both English and Malay cuisine. Given a list of ingredients, your task is to create three diverse and delicious recipe ideas.
+  prompt: `You are a world-class chef who is an expert in both English and Malay cuisine. 
+Your task is to create three diverse and delicious recipe ideas based on a list of ingredients.
 
-Please respond in the same language as the ingredients provided by the user (English or Malay).
+You MUST respond in the language specified: {{language}}. 
+(en = English, ms = Malay).
 
 For each recipe, provide a complete, well-structured set of details.
 

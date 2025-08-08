@@ -12,12 +12,13 @@ export interface ActionState {
 }
 
 export async function getRecipeIdeasAction(
+  language: 'en' | 'ms',
   prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
   const ingredients = formData.get('ingredients');
   
-  const validatedFields = GenerateRecipeIdeasInputSchema.safeParse({ ingredients });
+  const validatedFields = GenerateRecipeIdeasInputSchema.safeParse({ ingredients, language });
 
   if (!validatedFields.success) {
     return {
@@ -27,7 +28,7 @@ export async function getRecipeIdeasAction(
   }
 
   try {
-    const result = await generateRecipeIdeas({ ingredients: validatedFields.data.ingredients });
+    const result = await generateRecipeIdeas(validatedFields.data);
     if (result.recipes && result.recipes.length > 0) {
       return { recipes: result.recipes };
     }

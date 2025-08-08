@@ -1,8 +1,13 @@
+'use client';
+
 import Link from 'next/link';
 import { ChefHat, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/hooks/use-language';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 export default function Header() {
+  const { language, text } = useLanguage();
   return (
     <header className="bg-background/80 backdrop-blur-sm sticky top-0 z-40 border-b border-border">
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
@@ -10,13 +15,14 @@ export default function Header() {
           <ChefHat className="h-8 w-8 text-primary" />
           <span>FGFridge Feast</span>
         </Link>
-        <nav>
+        <nav className="flex items-center gap-2">
           <Button asChild variant="ghost" className="text-base">
             <Link href="/favorites">
               <Heart className="mr-2 h-5 w-5" />
-              Favorites / Kegemaran
+              {text.favorites[language]}
             </Link>
           </Button>
+          <LanguageSwitcher />
         </nav>
       </div>
     </header>

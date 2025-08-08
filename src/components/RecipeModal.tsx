@@ -10,6 +10,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { type Recipe } from "@/ai/schemas";
 import { Clock, ChefHat, Soup } from "lucide-react";
+import { useLanguage } from "@/hooks/use-language";
 
 interface RecipeModalProps {
   recipe: Recipe;
@@ -18,6 +19,7 @@ interface RecipeModalProps {
 }
 
 export function RecipeModal({ recipe, isOpen, onClose }: RecipeModalProps) {
+  const { language, text } = useLanguage();
   if (!recipe) return null;
 
   return (
@@ -43,7 +45,7 @@ export function RecipeModal({ recipe, isOpen, onClose }: RecipeModalProps) {
           <div className="md:col-span-1">
             <h2 className="text-2xl font-headline font-bold flex items-center gap-3 mb-4 sticky top-0 bg-background py-2">
               <Soup className="h-6 w-6 text-primary" />
-              Ingredients / Bahan-bahan
+              {text.ingredients[language]}
             </h2>
             <ul className="space-y-2 list-disc list-inside text-foreground/90">
               {recipe.ingredients?.map((ingredient, index) => (
@@ -55,7 +57,7 @@ export function RecipeModal({ recipe, isOpen, onClose }: RecipeModalProps) {
           <div className="md:col-span-2">
             <h2 className="text-2xl font-headline font-bold flex items-center gap-3 mb-4 sticky top-0 bg-background py-2">
                 <ChefHat className="h-6 w-6 text-primary" />
-                Instructions / Arahan
+                {text.instructions[language]}
             </h2>
             <div className="space-y-6">
               {recipe.instructions?.map((instruction, index) => (

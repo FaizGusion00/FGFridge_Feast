@@ -5,6 +5,7 @@ export const GenerateRecipeIdeasInputSchema = z.object({
   ingredients: z
     .string()
     .describe('A comma-separated list of ingredients available to use.'),
+  language: z.enum(['en', 'ms']).describe('The language to generate the recipe in.')
 });
 
 export type GenerateRecipeIdeasInput = z.infer<

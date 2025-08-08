@@ -10,10 +10,12 @@ import { Card } from '@/components/ui/card';
 import { RecipeCard } from '@/components/RecipeCard';
 import { RecipeModal } from '@/components/RecipeModal';
 import { type Recipe } from '@/ai/schemas';
+import { useLanguage } from '@/hooks/use-language';
 
 export default function FavoritesPage() {
   const { favorites, isLoaded } = useFavorites();
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
+  const { language, text } = useLanguage();
 
   const handleRecipeSelect = (recipe: Recipe) => {
     setSelectedRecipe(recipe);
@@ -25,7 +27,7 @@ export default function FavoritesPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
-      <h1 className="text-4xl font-headline font-bold mb-8 text-center text-primary">Your Favorite Recipes / Resepi Kegemaran Anda</h1>
+      <h1 className="text-4xl font-headline font-bold mb-8 text-center text-primary">{text.yourFavoriteRecipes[language]}</h1>
       
       {!isLoaded && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -43,12 +45,12 @@ export default function FavoritesPage() {
       {isLoaded && favorites.length === 0 && (
         <div className="text-center py-16 flex flex-col items-center gap-4 bg-card rounded-xl shadow-lg border-border">
           <UtensilsCrossed className="h-16 w-16 text-muted-foreground" />
-          <h2 className="text-2xl font-semibold font-headline">No Favorites Yet / Tiada Kegemaran Lagi</h2>
+          <h2 className="text-2xl font-semibold font-headline">{text.noFavorites[language]}</h2>
           <p className="text-muted-foreground">
-            You haven't saved any recipes. Let's find some! / Anda belum menyimpan sebarang resipi. Jom cari!
+            {text.noFavoritesDesc[language]}
           </p>
           <Button asChild>
-            <Link href="/">Generate Recipes / Jana Resepi</Link>
+            <Link href="/">{text.generateRecipes[language]}</Link>
           </Button>
         </div>
       )}

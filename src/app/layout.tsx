@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/Header";
 import { cn } from '@/lib/utils';
 import { Inter, Raleway } from 'next/font/google';
+import { LanguageProvider } from '@/hooks/use-language';
 
 export const metadata: Metadata = {
   title: 'FGFridge Feast',
@@ -35,11 +36,13 @@ export default function RootLayout({
           fontHeadline.variable
         )}
       >
-        <div className="relative flex min-h-dvh flex-col bg-background">
-          <Header />
-          <main className="flex-1">{children}</main>
-        </div>
-        <Toaster />
+        <LanguageProvider>
+          <div className="relative flex min-h-dvh flex-col bg-background">
+            <Header />
+            <main className="flex-1">{children}</main>
+          </div>
+          <Toaster />
+        </LanguageProvider>
       </body>
     </html>
   );
