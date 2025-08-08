@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/Header";
 import { cn } from '@/lib/utils';
 import { Inter, Raleway } from 'next/font/google';
-import { LanguageProvider } from '@/hooks/use-language';
+import { LanguageProvider } from '@/hooks/use-language.tsx';
 
 export const metadata: Metadata = {
   title: 'FGFridge Feast',
