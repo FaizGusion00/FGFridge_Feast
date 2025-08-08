@@ -112,7 +112,7 @@ export default function Home() {
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
-       <section className="text-center mb-12 bg-card border border-border rounded-xl p-8 shadow-lg">
+       <section className="text-center mb-12 bg-card border border-border rounded-xl p-6 sm:p-8 shadow-lg">
         <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4 text-primary">
           {text.whatsInFridge[language]}
         </h1>
