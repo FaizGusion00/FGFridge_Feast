@@ -18,7 +18,7 @@ export function RecipeCard({ recipe, index }: RecipeCardProps) {
   const { isLoaded, isFavorite, toggleFavorite } = useFavorites();
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
-    e.preventDefault();
+    e.stopPropagation();
     // Using title as a unique key for favorites for now
     toggleFavorite(recipe.title);
   };
