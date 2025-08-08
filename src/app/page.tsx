@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useEffect, useRef } from 'react';
+import { useActionState, useEffect, useRef, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { getRecipeIdeasAction, type ActionState } from '@/app/actions';
 import { Button } from '@/components/ui/button';
@@ -38,8 +38,14 @@ function SubmitButton() {
   );
 }
 
-function Results({ recipes }: { recipes: Recipe[] | undefined }) {
+function Results({ recipes, setRecipes }: { recipes: Recipe[] | undefined, setRecipes: (recipes: Recipe[] | undefined) => void }) {
   const { pending } = useFormStatus();
+
+  useEffect(() => {
+    if(!pending) {
+        setRecipes(recipes);
+    }
+  }, [pending, recipes, setRecipes]);
 
   if (pending) {
     return (
@@ -59,19 +65,6 @@ function Results({ recipes }: { recipes: Recipe[] | undefined }) {
     );
   }
 
-  if (recipes && recipes.length > 0) {
-    return (
-      <section className="mt-12">
-        <h2 className="text-3xl font-bold font-headline mb-8 text-center">Here are your feast ideas!</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-in fade-in-50 duration-500">
-          {recipes.map((recipe, index) => (
-            <RecipeCard key={index} recipe={recipe} index={index} />
-          ))}
-        </div>
-      </section>
-    );
-  }
-
   return null;
 }
 
@@ -80,6 +73,7 @@ export default function Home() {
   const { toast } = useToast();
   const resultsRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const [recipes, setRecipes] = useState<Recipe[] | undefined>();
 
   useEffect(() => {
     if (state.error && !state.fieldErrors) {
@@ -130,9 +124,21 @@ export default function Home() {
           <SubmitButton />
         </div>
         <div ref={resultsRef}>
-          <Results recipes={state.recipes} />
+          <Results recipes={state.recipes} setRecipes={setRecipes} />
         </div>
       </form>
+      
+      {recipes && recipes.length > 0 && (
+        <section className="mt-12">
+            <h2 className="text-3xl font-bold font-headline mb-8 text-center">Here are your feast ideas!</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-in fade-in-50 duration-500">
+            {recipes.map((recipe, index) => (
+                <RecipeCard key={index} recipe={recipe} />
+            ))}
+            </div>
+        </section>
+      )}
+
     </div>
   );
 }

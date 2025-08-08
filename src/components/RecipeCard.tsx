@@ -11,22 +11,23 @@ import Link from 'next/link';
 
 type RecipeCardProps = {
   recipe: Recipe;
-  index: number;
 };
 
-export function RecipeCard({ recipe, index }: RecipeCardProps) {
+export function RecipeCard({ recipe }: RecipeCardProps) {
   const { isLoaded, isFavorite, toggleFavorite } = useFavorites();
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // Using title as a unique key for favorites for now
+    e.preventDefault();
     toggleFavorite(recipe.title);
   };
 
   const favorite = isFavorite(recipe.title);
+  
+  const recipeUrl = `/recipe/${encodeURIComponent(recipe.title.toLowerCase().replace(/\s+/g, '-'))}?recipe=${encodeURIComponent(JSON.stringify(recipe))}`;
 
   return (
-    <Link href={`/recipe/${index}`} className="group block">
+    <Link href={recipeUrl} className="group block">
       <Card className="flex flex-col h-full bg-card border-border rounded-xl shadow-md transition-all duration-300 group-hover:shadow-primary/20 group-hover:border-primary/50 group-hover:-translate-y-1">
         <CardHeader className="flex-row gap-4 items-start">
           <div className="flex-grow">
