@@ -104,7 +104,6 @@ export function LanguageProvider({children}: {children: React.ReactNode}) {
     if (isLoaded) {
       try {
         window.localStorage.setItem(LANGUAGE_KEY, language);
-        // also update html lang attribute
         document.documentElement.lang = language;
       } catch (error) {
         console.error('Error saving language to localStorage', error);
@@ -123,7 +122,7 @@ export function LanguageProvider({children}: {children: React.ReactNode}) {
   };
 
   if (!isLoaded) {
-    return null; // or a loading spinner
+    return null;
   }
 
   return (
