@@ -4,7 +4,8 @@ import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/Header";
 import { cn } from '@/lib/utils';
 import { Inter, Raleway } from 'next/font/google';
-import { LanguageProvider } from '@/hooks/use-language.tsx';
+import { LanguageProvider } from '@/hooks/use-language';
+import Footer from '@/components/Footer';
 
 const customFavicon = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
@@ -58,6 +59,7 @@ export default function RootLayout({
           <div className="relative flex min-h-dvh flex-col bg-background">
             <Header />
             <main className="flex-1">{children}</main>
+            <Footer />
           </div>
           <Toaster />
         </LanguageProvider>
